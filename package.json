@@ -1,6 +1,6 @@
 {
-  "name": "firestore-rest",
-  "version": "1.3.0",
+  "name": "@dotcook/firestore-rest",
+  "version": "1.3.1",
   "description": "Makes firestore requests using the Google REST API to avoid the gRPC cold start issue.",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,7 @@
     "gcp"
   ],
   "author": "KemingChen <believe75467@gmail.com>",
+  "repository": "KemingChen/firestore-rest",
   "license": "MIT",
   "dependencies": {
     "firestore-adapter": "^1.1.0",
