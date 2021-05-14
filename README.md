@@ -1,8 +1,5 @@
 # Firestore REST
 
-[![npm version](https://img.shields.io/npm/dt/firestore-rest.svg?style=flat-square)](https://img.shields.io/npm/dt/firestore-rest.svg)
-[![npm version](https://img.shields.io/npm/v/firestore-rest.svg?style=flat-square)](https://www.npmjs.com/package/firestore-rest)
-
 Due to an issue with gRPC, any request that involves Firestore in conjunction with Firebase Functions with take 5-10 seconds to respond after a deploy.
 
 For more information about this particular issue, see [this ticket](https://github.com/googleapis/nodejs-firestore/issues/528).
@@ -15,53 +12,15 @@ Hopefully, when [this ticket](https://github.com/googleapis/gax-nodejs/issues/40
 
 https://cloud.google.com/firestore/docs/reference/rest/v1/projects.databases.documents
 
-## Set up
-
-```
-npm i --save firestore-rest
-```
-
-You will need to ensure that you have `GOOGLE_APPLICATION_CREDENTIALS` and `GCLOUD_PROJECT` as environment variables. The former is the path to your `.json` credentials file, and the latter is the project name.
-
-**NOTE:** I found that I had to export these within the function because Firebase Functions does not allow upper-case variable names for some reason. If you try to do so, you'll get the following error:
-
-```s
-Error: Invalid config name onCadenceAssignToContact.GOOGLE_APPLICATION_CREDENTIALS, cannot use upper case.
-```
-
-So my firebase initialization file has this at the top:
-
-```js
-process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, '../path/to/credentials.json')
-process.env.GCLOUD_PROJECT = 'my-app-name'
-```
-
-These aren't secret, so it doesn't really matter how you pass those values to the API.
-
 ## Usage
-
-When initializing `firebase-admin`, initialize and export `db` as well. See example below for one way to configure your app:
-
 ```js
-const admin = require('firebase-admin')
 const Firestore = require('firestore-rest')
-const path = require('path')
 
-process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, '../path/to/credentials.json')
-process.env.GCLOUD_PROJECT = 'my-app-name'
-
-var serviceAccount = require('../path/to/credentials.json')
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://<your app>.firebaseio.com'
+const db = new Firestore({
+    projectId: 'my-app-name'
 })
 
-// const db = admin.firestore() <= this is the old way to do it
-const db = new Firestore()
-
 module.exports = {
-  admin,
   db
 }
 ```
