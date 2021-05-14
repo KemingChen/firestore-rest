@@ -83,14 +83,9 @@ class Firestore {
 
     async get() {
         const name = `projects/${this.projectId}/databases/(default)/documents${this.path}`;
-        let response;
-        try {
-            response = await firestore.projects.databases.documents.get({
-                name,
-            });
-        } catch (err) {
-            console.error(err);
-        }
+        const response = await firestore.projects.databases.documents.get({
+            name,
+        });
         if (!response.data.documents) {
             return processItem(response.data);
         }
@@ -111,17 +106,11 @@ class Firestore {
             opts['updateMask.fieldPaths'] = options.mergeFields;
         }
 
-        let response;
-        try {
-            response = await firestore.projects.databases.documents.patch({
-                name,
-                resource,
-                ...opts,
-            });
-        } catch (err) {
-            console.error(err);
-        }
-
+        const response = await firestore.projects.databases.documents.patch({
+            name,
+            resource,
+            ...opts,
+        });
         const result = {
             writeTime: moment(response.data.updateTime),
             isEqual: value => {
@@ -129,7 +118,6 @@ class Firestore {
                 return JSON.stringify(converted) === JSON.stringify(value);
             },
         };
-
         return result;
     }
 
@@ -140,14 +128,9 @@ class Firestore {
 
     async delete() {
         const name = `projects/${this.projectId}/databases/(default)/documents${this.path}`;
-        let response;
-        try {
-            response = await firestore.projects.databases.documents.delete({
-                name,
-            });
-        } catch (err) {
-            console.error(err);
-        }
+        const response = await firestore.projects.databases.documents.delete({
+            name,
+        });
         return response.data;
     }
 }

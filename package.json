@@ -1,6 +1,6 @@
 {
   "name": "@dotcook/firestore-rest",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Makes firestore requests using the Google REST API to avoid the gRPC cold start issue.",
   "main": "index.js",
   "scripts": {
